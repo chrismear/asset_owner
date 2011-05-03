@@ -1,13 +1,18 @@
 require 'spec_helper'
 
 describe "assets/new.html.erb" do
-  let(:asset) { mock_model("Asset").as_new_record.as_null_object }
-  let(:owner) { mock_model("Owner").as_new_record.as_null_object }
+  let(:asset) { mock_model("Asset").as_new_record }
+  let(:owner) { mock_model("Owner").as_new_record }
 
   before(:each) do
     asset.stub(:owner => owner)
-    asset.accepts_nested_attributes_for :owner
+    asset.stub(:name)
+    asset.stub(:owner_attributes=)
+    
+    owner.stub(:name)
+    
     assign(:asset, asset)
+    
   end
 
   it "renders new asset form with owner attributes" do
